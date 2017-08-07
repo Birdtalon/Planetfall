@@ -54,36 +54,36 @@ GLOBAL_VAR(command_name)
 
 	return capitalize(name)
 
-/proc/station_name()
-	if(!GLOB.station_name)
+/proc/colony_name()
+	if(!GLOB.colony_name)
 		var/newname
-		if(config && config.station_name)
-			newname = config.station_name
+		if(config && config.colony_name)
+			newname = config.colony_name
 		else
-			newname = new_station_name()
+			newname = new_colony_name()
 
-		set_station_name(newname)
+		set_colony_name(newname)
 
-	return GLOB.station_name
+	return GLOB.colony_name
 
-/proc/set_station_name(newname)
-	GLOB.station_name = newname
+/proc/set_colony_name(newname)
+	GLOB.colony_name = newname
 
 	if(config && config.server_name)
-		world.name = "[config.server_name][config.server_name==GLOB.station_name ? "" : ": [GLOB.station_name]"]"
+		world.name = "[config.server_name][config.server_name==GLOB.colony_name ? "" : ": [GLOB.colony_name]"]"
 	else
-		world.name = GLOB.station_name
+		world.name = GLOB.colony_name
 
 
-/proc/new_station_name()
+/proc/new_colony_name()
 	var/random = rand(1,5)
 	var/name = ""
-	var/new_station_name = ""
+	var/new_colony_name = ""
 
 	//Rare: Pre-Prefix
 	if (prob(10))
 		name = pick(GLOB.station_prefixes)
-		new_station_name = name + " "
+		new_colony_name = name + " "
 		name = ""
 
 	// Prefix
@@ -94,29 +94,29 @@ GLOBAL_VAR(command_name)
 		name = holiday.getStationPrefix()
 		//get normal name
 	if(!name)
-		name = pick(GLOB.station_names)
+		name = pick(GLOB.colony_names)
 	if(name)
-		new_station_name += name + " "
+		new_colony_name += name + " "
 
 	// Suffix
 	name = pick(GLOB.station_suffixes)
-	new_station_name += name + " "
+	new_colony_name += name + " "
 
 	// ID Number
 	switch(random)
 		if(1)
-			new_station_name += "[rand(1, 99)]"
+			new_colony_name += "[rand(1, 99)]"
 		if(2)
-			new_station_name += pick(GLOB.greek_letters)
+			new_colony_name += pick(GLOB.greek_letters)
 		if(3)
-			new_station_name += "\Roman[rand(1,99)]"
+			new_colony_name += "\Roman[rand(1,99)]"
 		if(4)
-			new_station_name += pick(GLOB.phonetic_alphabet)
+			new_colony_name += pick(GLOB.phonetic_alphabet)
 		if(5)
-			new_station_name += pick(GLOB.numbers_as_words)
+			new_colony_name += pick(GLOB.numbers_as_words)
 		if(13)
-			new_station_name += pick("13","XIII","Thirteen")
-	return new_station_name
+			new_colony_name += pick("13","XIII","Thirteen")
+	return new_colony_name
 
 /proc/syndicate_name()
 	var/static/syndicate_name

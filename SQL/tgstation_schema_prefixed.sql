@@ -381,7 +381,7 @@ CREATE TABLE `SS13_round` (
   `end_state` VARCHAR(64) NULL,
   `shuttle_name` VARCHAR(64) NULL,
   `map_name` VARCHAR(32) NULL,
-  `station_name` VARCHAR(80) NULL,
+  `colony_name` VARCHAR(80) NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

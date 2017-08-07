@@ -56,7 +56,7 @@
 		if(time > 0)
 			to_chat(user, "<span class='notice'>Hostile Takeover in progress. Estimated [time] seconds remain.</span>")
 		else
-			to_chat(user, "<span class='notice'>Hostile Takeover of [station_name()] successful. Have a great day.</span>")
+			to_chat(user, "<span class='notice'>Hostile Takeover of [colony_name()] successful. Have a great day.</span>")
 	else
 		to_chat(user, "<span class='notice'>System on standby.</span>")
 	to_chat(user, "<span class='danger'>System Integrity: [round((obj_integrity/max_integrity)*100,1)]%</span>")

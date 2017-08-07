@@ -207,7 +207,7 @@
 	  </div>
 	{{else}}
 	  <div class='item'>
-		<h2>{{data.station_name}}</h2>
+		<h2>{{data.colony_name}}</h2>
 	  </div>
 	  <div class='item' style='width: 100%'>
 		{{#each data.regions}}

@@ -41,7 +41,7 @@
 	var/obj/item/weapon/paper/P = new(T)
 
 	P.name = "requisition form - #[id] ([pack.name])"
-	P.info += "<h2>[station_name()] Supply Requisition</h2>"
+	P.info += "<h2>[colony_name()] Supply Requisition</h2>"
 	P.info += "<hr/>"
 	P.info += "Order #[id]<br/>"
 	P.info += "Item: [pack.name]<br/>"
@@ -56,13 +56,13 @@
 /datum/supply_order/proc/generateManifest(obj/structure/closet/crate/C)
 	var/obj/item/weapon/paper/fluff/jobs/cargo/manifest/P = new(C, id, pack.cost)
 
-	var/station_name = (P.errors & MANIFEST_ERROR_NAME) ? new_station_name() : station_name()
+	var/colony_name = (P.errors & MANIFEST_ERROR_NAME) ? new_colony_name() : colony_name()
 
 	P.name = "shipping manifest - #[id] ([pack.name])"
 	P.info += "<h2>[command_name()] Shipping Manifest</h2>"
 	P.info += "<hr/>"
 	P.info += "Order #[id]<br/>"
-	P.info += "Destination: [station_name]<br/>"
+	P.info += "Destination: [colony_name]<br/>"
 	P.info += "Item: [pack.name]<br/>"
 	P.info += "Contents: <br/>"
 	P.info += "<ul>"

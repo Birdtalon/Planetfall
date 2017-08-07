@@ -133,7 +133,7 @@
 	var/dockTime = config.arrivals_shuttle_dock_window
 	if(mode == SHUTTLE_CALL && timeLeft(1) > dockTime)
 		if(console)
-			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [station_name()].")
+			console.say(damaged ? "Initiating emergency docking for repairs!" : "Now approaching: [colony_name()].")
 		hyperspace_sound(HYPERSPACE_LAUNCH, areas)	//for the new guy
 		setTimer(dockTime)
 

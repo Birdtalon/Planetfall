@@ -143,7 +143,7 @@
 				if(!input || !(usr in view(1,src)))
 					return
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 50, 0)
-				send2otherserver("[station_name()]", input,"Comms_Console")
+				send2otherserver("[colony_name()]", input,"Comms_Console")
 				minor_announce(input, title = "Outgoing message to allied station")
 				log_talk(usr,"[key_name(usr)] has sent a message to the other server: [input]",LOGSAY)
 				message_admins("[key_name_admin(usr)] has sent a message to the other server.")

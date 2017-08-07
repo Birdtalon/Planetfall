@@ -23,7 +23,7 @@
 /obj/item/areaeditor/attack_self(mob/user)
 	add_fingerprint(user)
 	var/text = "<BODY><HTML><head><title>[src]</title></head> \
-				<h2>[station_name()] [src.name]</h2> \
+				<h2>[colony_name()] [src.name]</h2> \
 				<small>[fluffnotice]</small><hr>"
 	switch(get_area_type())
 		if(AREA_SPACE)

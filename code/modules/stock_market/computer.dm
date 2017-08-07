@@ -13,7 +13,7 @@
 
 /obj/machinery/computer/stockexchange/New()
 	..()
-	logged_in = "[station_name()] Cargo Department"
+	logged_in = "[colony_name()] Cargo Department"
 
 /obj/machinery/computer/stockexchange/proc/balance()
 	if (!logged_in)
@@ -61,7 +61,7 @@ a.updated {
 	color: red;
 }
 </style>"}
-	var/dat = "<html><head><title>[station_name()] Stock Exchange</title>[css]</head><body>"
+	var/dat = "<html><head><title>[colony_name()] Stock Exchange</title>[css]</head><body>"
 
 	dat += "<span class='user'>Welcome, <b>[logged_in]</b></span><br><span class='balance'><b>Credits:</b> [balance()] </span><br>"
 	for (var/datum/stock/S in GLOB.stockExchange.last_read)

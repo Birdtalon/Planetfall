@@ -98,7 +98,7 @@ TOGGLE_CHECKBOX(/datum/verbs/menu/Settings/Ghost/chatterbox/Events, toggle_arriv
 	set category = "Preferences"
 	set desc = "New Player Arrival"
 	usr.client.prefs.toggles ^= DISABLE_ARRIVALRATTLE
-	to_chat(usr, "You will [(usr.client.prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get messages when someone joins the station.")
+	to_chat(usr, "You will [(usr.client.prefs.toggles & DISABLE_ARRIVALRATTLE) ? "no longer" : "now"] get messages when someone joins the colony.")
 	usr.client.prefs.save_preferences()
 	SSblackbox.add_details("preferences_verb", "Toggle Arrivalrattle|[!(usr.client.prefs.toggles & DISABLE_ARRIVALRATTLE)]") //If you are copy-pasting this, maybe you should rethink where your life went so wrong.
 /datum/verbs/menu/Settings/Ghost/chatterbox/Events/toggle_arrivalrattle/Get_checked(client/C)
@@ -408,4 +408,3 @@ GLOBAL_LIST_INIT(ghost_orbits, list(GHOST_ORBIT_CIRCLE,GHOST_ORBIT_TRIANGLE,GHOS
 	prefs.save_preferences()
 	to_chat(src, "You will [(prefs.chat_toggles & CHAT_PRAYER) ? "now" : "no longer"] see prayerchat.")
 	SSblackbox.add_details("admin_toggle","Toggle Prayer Visibility|[prefs.chat_toggles & CHAT_PRAYER]") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-

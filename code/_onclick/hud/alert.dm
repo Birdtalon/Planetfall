@@ -153,7 +153,7 @@
 
 /obj/screen/alert/fat
 	name = "Fat"
-	desc = "You ate too much food, lardass. Run around the station and lose some weight."
+	desc = "You ate too much food, lardass. Run around the planet and lose some weight."
 	icon_state = "fat"
 
 /obj/screen/alert/hungry
@@ -698,4 +698,3 @@ so as to remain in compliance with the most up-to-date laws."
 	severity = 0
 	master = null
 	screen_loc = ""
-

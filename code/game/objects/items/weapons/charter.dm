@@ -20,7 +20,7 @@
 	. = ..()
 	if(!standard_station_regex)
 		var/prefixes = jointext(GLOB.station_prefixes, "|")
-		var/names = jointext(GLOB.station_names, "|")
+		var/names = jointext(GLOB.colony_names, "|")
 		var/suffixes = jointext(GLOB.station_suffixes, "|")
 		var/numerals = jointext(GLOB.station_numerals, "|")
 		var/regexstr = "^(([prefixes]) )?(([names]) ?)([suffixes]) ([numerals])$"
@@ -38,7 +38,7 @@
 		return
 
 	var/new_name = stripped_input(user, message="What do you want to name \
-		[station_name()]? Keep in mind particularly terrible names may be \
+		[colony_name()]? Keep in mind particularly terrible names may be \
 		rejected by your employers, while names using the standard format, \
 		will automatically be accepted.", max_length=MAX_CHARTER_LEN)
 
@@ -78,14 +78,14 @@
 	response_timer_id = null
 
 /obj/item/weapon/station_charter/proc/rename_station(designation, uname, ureal_name, ukey)
-	set_station_name(designation)
-	minor_announce("[ureal_name] has designated your station as [station_name()]", "Captain's Charter", 0)
-	log_game("[ukey] has renamed the station as [station_name()].")
+	set_colony_name(designation)
+	minor_announce("[ureal_name] has designated your station as [colony_name()]", "Captain's Charter", 0)
+	log_game("[ukey] has renamed the station as [colony_name()].")
 
-	name = "station charter for [station_name()]"
+	name = "station charter for [colony_name()]"
 	desc = "An official document entrusting the governance of \
-		[station_name()] and surrounding space to Captain [uname]."
-	SSblackbox.set_details("station_renames","[station_name()]")
+		[colony_name()] and surrounding space to Captain [uname]."
+	SSblackbox.set_details("station_renames","[colony_name()]")
 	if(!unlimited_uses)
 		used = TRUE
 
@@ -107,12 +107,12 @@
 	force = 15
 
 /obj/item/weapon/station_charter/flag/rename_station(designation, uname, ureal_name, ukey)
-	set_station_name(designation)
-	minor_announce("[ureal_name] has designated the planet as [station_name()]", "Captain's Banner", 0)
-	log_game("[ukey] has renamed the planet as [station_name()].")
-	name = "banner of [station_name()]"
-	desc = "The banner bears the official coat of arms of Nanotrasen, signifying that [station_name()] has been claimed by Captain [uname] in the name of the company."
-	SSblackbox.set_details("station_renames","[station_name()]")
+	set_colony_name(designation)
+	minor_announce("[ureal_name] has designated the planet as [colony_name()]", "Captain's Banner", 0)
+	log_game("[ukey] has renamed the planet as [colony_name()].")
+	name = "banner of [colony_name()]"
+	desc = "The banner bears the official coat of arms of Nanotrasen, signifying that [colony_name()] has been claimed by Captain [uname] in the name of the company."
+	SSblackbox.set_details("station_renames","[colony_name()]")
 	if(!unlimited_uses)
 		used = TRUE
 

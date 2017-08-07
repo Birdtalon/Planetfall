@@ -154,22 +154,22 @@
 		if("set_name")
 			if(!check_rights(R_ADMIN))
 				return
-			var/new_name = input(usr, "Please input a new name for the station.", "What?", "") as text|null
+			var/new_name = input(usr, "Please input a new name for the colony.", "What?", "") as text|null
 			if(!new_name)
 				return
-			set_station_name(new_name)
-			log_admin("[key_name(usr)] renamed the station to \"[new_name]\".")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] renamed the station to: [new_name].</span>")
-			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
+			set_colony_name(new_name)
+			log_admin("[key_name(usr)] renamed the colony to \"[new_name]\".")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] renamed the colony to: [new_name].</span>")
+			priority_announce("[command_name()] has renamed the colony to \"[new_name]\".")
 
 		if("reset_name")
 			if(!check_rights(R_ADMIN))
 				return
-			var/new_name = new_station_name()
-			set_station_name(new_name)
-			log_admin("[key_name(usr)] reset the station name.")
-			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the station name.</span>")
-			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
+			var/new_name = new_colony_name()
+			set_colony_name(new_name)
+			log_admin("[key_name(usr)] reset the colony name.")
+			message_admins("<span class='adminnotice'>[key_name_admin(usr)] reset the colony name.</span>")
+			priority_announce("[command_name()] has renamed the colony to \"[new_name]\".")
 
 		if("list_bombers")
 			if(!check_rights(R_ADMIN))

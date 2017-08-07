@@ -334,7 +334,7 @@
 		data["slots"] = pos
 
 	data["src"] = "\ref[src]"
-	data["station_name"] = station_name()
+	data["colony_name"] = colony_name()
 
 
 	if(!mod_mode)

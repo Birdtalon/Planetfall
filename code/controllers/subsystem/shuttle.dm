@@ -231,7 +231,7 @@ SUBSYSTEM_DEF(shuttle)
 		admiral_message = pick(GLOB.admiral_messages)
 	var/intercepttext = "<font size = 3><b>Nanotrasen Update</b>: Request For Shuttle.</font><hr>\
 						To whom it may concern:<br><br>\
-						We have taken note of the situation upon [station_name()] and have come to the \
+						We have taken note of the situation upon [colony_name()] and have come to the \
 						conclusion that it does not warrant the abandonment of the station.<br>\
 						If you do not agree with our opinion we suggest that you open a direct \
 						line with us and explain the nature of your crisis.<br><br>\

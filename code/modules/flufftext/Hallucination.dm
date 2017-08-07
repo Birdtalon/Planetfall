@@ -868,7 +868,7 @@ GLOBAL_LIST_INIT(hallucinations_major, list(
 			target.playsound_local(null, 'sound/weapons/saberon.ogg',35,1)
 		if("blob_alert")
 			to_chat(target, "<h1 class='alert'>Biohazard Alert</h1>")
-			to_chat(target, "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [station_name()]. All personnel must contain the outbreak.</span><br><br>")
+			to_chat(target, "<br><br><span class='alert'>Confirmed outbreak of level 5 biohazard aboard [colony_name()]. All personnel must contain the outbreak.</span><br><br>")
 			target.playsound_local(null, 'sound/ai/outbreak5.ogg', 100, 0)
 		if("tesla") //Tesla loose!
 			target.playsound_local(null, 'sound/magic/lightningbolt.ogg', 35, 1)

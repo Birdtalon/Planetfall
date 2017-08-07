@@ -25,7 +25,7 @@
 
 	var/server_name = null				// server name (the name of the game window)
 	var/server_sql_name = null			// short form server name used for the DB
-	var/station_name = null				// station name (the name of the station in-game)
+	var/colony_name = null				// colony name (the name of the colony in-game)
 	var/lobby_countdown = 120			// In between round countdown.
 	var/round_end_countdown = 25		// Post round murder death kill countdown
 	var/hub = 0
@@ -390,7 +390,7 @@
 				if("serversqlname")
 					server_sql_name = value
 				if("stationname")
-					station_name = value
+					colony_name = value
 				if("hostedby")
 					hostedby = value
 				if("server")

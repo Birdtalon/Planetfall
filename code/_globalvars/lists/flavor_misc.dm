@@ -112,7 +112,7 @@ GLOBAL_LIST_INIT(station_prefixes, list("", "Imperium", "Heretical", "Cuban",
 	"Zybourne", "Central", "Main", "Government", "Uoi", "Fat",
 	"Automated", "Experimental", "Augmented"))
 
-GLOBAL_LIST_INIT(station_names, list("", "Stanford", "Dorf", "Alium",
+GLOBAL_LIST_INIT(colony_names, list("", "Stanford", "Dorf", "Alium",
 	"Prefix", "Clowning", "Aegis", "Ishimura", "Scaredy", "Death-World",
 	"Mime", "Honk", "Rogue", "MacRagge", "Ultrameens", "Safety", "Paranoia",
 	"Explosive", "Neckbear", "Donk", "Muppet", "North", "West", "East",

@@ -333,7 +333,7 @@
 
 			//Greet the commando
 			to_chat(Commando, "<B><font size=3 color=red>You are the [numagents==1?"Deathsquad Officer":"Death Commando"].</font></B>")
-			var/missiondesc = "Your squad is being sent on a mission to [station_name()] by Nanotrasen's Security Division."
+			var/missiondesc = "Your squad is being sent on a mission to [colony_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Board the shuttle when your team is ready."
 			else
@@ -396,7 +396,7 @@
 
 
 /datum/admins/proc/makeOfficial()
-	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [station_name()] and its Captain.")
+	var/mission = input("Assign a task for the official", "Assign Task", "Conduct a routine preformance review of [colony_name()] and its Captain.")
 	var/list/mob/dead/observer/candidates = pollGhostCandidates("Do you wish to be considered to be a Centcom Official?", "deathsquad")
 
 	if(candidates.len)
@@ -425,7 +425,7 @@
 
 		//Greet the official
 		to_chat(newmob, "<B><font size=3 color=red>You are a Centcom Official.</font></B>")
-		to_chat(newmob, "<BR>Central Command is sending you to [station_name()] with the task: [mission]")
+		to_chat(newmob, "<BR>Central Command is sending you to [colony_name()] with the task: [mission]")
 
 		//Logging and cleanup
 		message_admins("Centcom Official [key_name_admin(newmob)] has spawned with the task: [mission]")
@@ -527,7 +527,7 @@
 
 			//Greet the commando
 			to_chat(ERTOperative, "<B><font size=3 color=red>You are [numagents==1?"the Emergency Response Team Commander":"an Emergency Response Officer"].</font></B>")
-			var/missiondesc = "Your squad is being sent on a Code [alert] mission to [station_name()] by Nanotrasen's Security Division."
+			var/missiondesc = "Your squad is being sent on a Code [alert] mission to [colony_name()] by Nanotrasen's Security Division."
 			if(numagents == 1) //If Squad Leader
 				missiondesc += " Lead your squad to ensure the completion of the mission. Avoid civilian casualites when possible. Board the shuttle when your team is ready."
 			else
