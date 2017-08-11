@@ -20,6 +20,8 @@
 	var/sheetAmount = 7
 	var/openSound = 'sound/effects/stonedoor_openclose.ogg'
 	var/closeSound = 'sound/effects/stonedoor_openclose.ogg'
+	var/islocked = FALSE
+	var/locked_code = FALSE
 	CanAtmosPass = ATMOS_PASS_DENSITY
 
 /obj/structure/mineral_door/New(location)
@@ -60,6 +62,45 @@
 		return !opacity
 	return !density
 
+//Lock or unlock the door
+
+/obj/structure/mineral_door/proc/Lock()
+	if(islocked == TRUE)
+		door_unlock()
+	else
+		if(state == 0)
+			door_lock()
+		else
+			visible_message("DEBUG: YOU CANNOT LOCK AN OPEN DOOR")
+
+//Create a lock - called when applying a lock to the door
+
+/obj/structure/mineral_door/proc/door_create_lock()
+	if(!locked_code)
+		locked_code = rand(1, 200)
+		visible_message("DEBUG: DOOR LOCKED CODE IS [locked_code]")
+	else
+		visible_message("DEBUG: DOOR ALREADY HAS A LOCK APPLIED!")
+
+//Lock the door
+
+/obj/structure/mineral_door/proc/door_lock()
+	islocked = TRUE
+	visible_message("DEBUG: DOOR LOCKED")
+
+//Unlock the door
+
+/obj/structure/mineral_door/proc/door_unlock()
+	islocked = FALSE
+	visible_message("DEBUG: DOOR UNLOCKED")
+
+	// APPLYING A LOCK TO A DOOR
+
+/obj/structure/mineral_door/attackby(obj/item/weapon/lock/lock_assy/L, mob/user, params)
+	if(istype(L, /obj/item/weapon/lock/lock_assy))
+		visible_message("DEBUG: PROC SUCCESS NOW TRY TO APPLY THE LOCK")
+		door_create_lock()
+
 /obj/structure/mineral_door/proc/TryToSwitchState(atom/user)
 	if(isSwitchingStates)
 		return
@@ -84,16 +125,19 @@
 		Open()
 
 /obj/structure/mineral_door/proc/Open()
-	isSwitchingStates = 1
-	playsound(src, openSound, 100, 1)
-	set_opacity(FALSE)
-	flick("[initial_state]opening",src)
-	sleep(10)
-	density = FALSE
-	state = 1
-	air_update_turf(1)
-	update_icon()
-	isSwitchingStates = 0
+	if(islocked == FALSE)
+		isSwitchingStates = 1
+		playsound(src, openSound, 100, 1)
+		set_opacity(FALSE)
+		flick("[initial_state]opening",src)
+		sleep(10)
+		density = FALSE
+		state = 1
+		air_update_turf(1)
+		update_icon()
+		isSwitchingStates = 0
+	else
+		visible_message("DEBUG: DOOR LOCKED")
 
 	if(close_delay != -1)
 		addtimer(CALLBACK(src, .proc/Close), close_delay)
