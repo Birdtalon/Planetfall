@@ -34,11 +34,7 @@ Items for locking doors and chests
     /obj/item/weapon/lock/key
     )
 
-/obj/item/weapon/lock/key/verb/rename()
-  set name = "Rename Key"
-  set category = "Object"
-  set src in usr
-
+/obj/item/weapon/lock/key/proc/rename()
   if(usr.incapacitated())
     return
   if(ishuman(usr))
@@ -46,3 +42,6 @@ Items for locking doors and chests
     if((loc == usr && usr.stat == CONSCIOUS))
       name = "key ([k_name])"
       add_fingerprint(usr)
+
+/obj/item/weapon/lock/key/attack_self()
+  rename()

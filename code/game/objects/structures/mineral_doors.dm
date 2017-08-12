@@ -84,16 +84,16 @@
 	if(!locked_code)
 		locked_code = rand(1, 200) //We generate a random code for the door (yes, some can be duplicates)
 		to_chat(H, "You begin integrating the lock assembly into [src].")
-		if(do_after(H, 20, target = src) && src)
+		if(src && do_after(H, 20, target = src))
 			var/obj/item/weapon/lock/key/K = new /obj/item/weapon/lock/key //Create a new key
 			K.keycode = locked_code // Assign that code to the new key
 			K.name += " ([K.keycode])"
 			K.desc += " You notice the numbers [K.keycode] engraved along its stem."
 			H.put_in_hands(K) //Give the key to the person who made the lock
 			qdel(L)
-			to_chat(H, "You succesfully integrate the lock assembly into [src] and remove the [K].")
+			to_chat(H, "You successfully integrate the lock assembly into [src] and remove the [K].")
 	else if(locked_code)
-		to_chat(H, "<span class='warning'>You cannot apply a second lock to [src]!")
+		to_chat(H, "<span class='warning'>You cannot apply a second lock to [src]!</span>")
 	else
 		to_chat(H, "<span class='warning'>You cannot apply the lock to [src]!</span>")
 
@@ -133,7 +133,7 @@
 		Open(user)
 
 /obj/structure/mineral_door/proc/Open(atom/user)
-	if(islocked == FALSE)
+	if(!islocked)
 		isSwitchingStates = 1
 		playsound(src, openSound, 100, 1)
 		set_opacity(FALSE)
@@ -192,7 +192,7 @@
 			return
 		else if(C.keycode == locked_code) // Key is correct
 			Lock(user)
-		else if(C.keycode != locked_code) // Key is incorrect
+		else // Key is incorrect
 			to_chat(user, "<span class='warning'>The key refuses to turn in the lock.</span>")
 	else if(user.a_intent != INTENT_HARM)
 		attack_hand(user)

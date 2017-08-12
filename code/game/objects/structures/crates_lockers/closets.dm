@@ -9,7 +9,7 @@
 	var/secure = FALSE //secure locker or not, also used if overriding a non-secure locker with a secure door overlay to add fancy lights
 	var/opened = FALSE
 	var/welded = FALSE
-	var/locked = FALSE
+	var/locked = FALSE // legacy ID based locking system.
 	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	max_integrity = 200
@@ -36,7 +36,7 @@
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
-	var/islocked = FALSE
+	var/islocked = FALSE // Birdtalon locks and keys system
 	var/locked_code = FALSE
 
 
@@ -84,7 +84,7 @@
 	if(!locked_code)
 		locked_code = rand(201, 400) // Generate a random code for the closet
 		to_chat(H, "You begin integrating the lock assembly into [src].")
-		if(do_after(H, 20, target = src) && src)
+		if(src && do_after(H, 20, target = src))
 			var/obj/item/weapon/lock/key/K = new /obj/item/weapon/lock/key //Create a new key
 			K.keycode = locked_code // Assign that code to the new key
 			K.name += " ([K.keycode])"
@@ -93,7 +93,7 @@
 			to_chat(H, "You successfully integrate the lock assembly into [src] and remove the [K].")
 			qdel(L)
 	else if(locked_code)
-		to_chat(H, "<span class='warning'>You are unable to apply a second lock to [src]!")
+		to_chat(H, "<span class='warning'>You are unable to apply a second lock to [src]!</span>")
 	else
 		to_chat(H, "<span class='warning'>You are unable apply the lock to [src]!</span>")
 
@@ -108,13 +108,12 @@
 		closet_unlock()
 		to_chat(user, "You unlock [src].")
 		playsound(loc, unlock_sound, 100, 1)
+	else if(!opened)
+		closet_lock()
+		to_chat(user, "You lock [src].")
+		playsound(loc, lock_sound, 100, 1)
 	else
-		if(!opened)
-			closet_lock()
-			to_chat(user, "You lock [src].")
-			playsound(loc, lock_sound, 100, 1)
-		else
-			to_chat(user, "<span class='warning'>You cannot lock [src] while it's open!</span>")
+		to_chat(user, "<span class='warning'>You cannot lock [src] while it's open!</span>")
 
 /obj/structure/closet/examine(mob/user)
 	..()
@@ -130,7 +129,7 @@
 
 /obj/structure/closet/proc/can_open(mob/living/user)
 	if(islocked)
-		to_chat(user, "<span class='warning'>The [src] is locked!")
+		to_chat(user, "<span class='warning'>The [src] is locked!</span>")
 		playsound(loc, rattle_sound, 100, 1)
 		return
 	if(welded || locked)
@@ -285,7 +284,7 @@
 			return
 		else if(C.keycode == locked_code) // Key is correct
 			Lock(user)
-		else if(C.keycode != locked_code)
+		else // key is incorrect
 			to_chat(user, "<span class='warning'>The key refuses to turn in the lock.</span>")
 	else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
 		var/obj/item/weapon/weldingtool/WT = W
