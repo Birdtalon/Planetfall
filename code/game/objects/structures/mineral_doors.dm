@@ -68,19 +68,18 @@
 //Lock or unlock the door
 
 /obj/structure/mineral_door/proc/Lock(mob/user)
-	if(islocked == TRUE)
+	if(islocked)
 		door_unlock()
 		to_chat(user, "You unlock [src].")
+	else if(state == 0)
+		door_lock()
+		to_chat(user, "You lock [src].")
 	else
-		if(state == 0)
-			door_lock()
-			to_chat(user, "You lock [src].")
-		else
-			to_chat(user, "<span class='warning'>You cannot lock [src] while it's open!</span>")
+		to_chat(user, "<span class='warning'>You cannot lock [src] while it's open!</span>")
 
 //Create a lock - called when applying a lock to the door
 
-/obj/structure/mineral_door/proc/door_create_lock(mob/user)
+/obj/structure/mineral_door/proc/door_create_lock(mob/user, obj/item/weapon/lock/lock_assy/L)
 	var/mob/living/carbon/human/H = user
 	if(!locked_code)
 		locked_code = rand(1, 200) //We generate a random code for the door (yes, some can be duplicates)
@@ -91,6 +90,7 @@
 			K.name += " ([K.keycode])"
 			K.desc += " You notice the numbers [K.keycode] engraved along its stem."
 			H.put_in_hands(K) //Give the key to the person who made the lock
+			qdel(L)
 			to_chat(H, "You succesfully integrate the lock assembly into [src] and remove the [K].")
 	else if(locked_code)
 		to_chat(H, "<span class='warning'>You cannot apply a second lock to [src]!")
@@ -146,7 +146,7 @@
 		isSwitchingStates = 0
 	else
 		playsound(src, rattleSound, 100, 1)
-		to_chat(user, "<span class='warning'>The [src] is locked!")
+		to_chat(user, "<span class='warning'>The [src] is locked!</span>")
 
 	if(close_delay != -1)
 		addtimer(CALLBACK(src, .proc/Close), close_delay)
@@ -175,26 +175,25 @@
 		icon_state = initial_state
 
 /obj/structure/mineral_door/attackby(obj/item/weapon/W, mob/user, params)
-	if(istype(W, /obj/item/weapon/pickaxe) && src.state == 1)
+	if(istype(W, /obj/item/weapon/pickaxe) && state == 1)
 		var/obj/item/weapon/pickaxe/digTool = W
 		to_chat(user, "<span class='notice'>You start digging the [name]...</span>")
 		if(do_after(user,digTool.digspeed*(1+round(max_integrity*0.01)), target = src) && src)
 			to_chat(user, "<span class='notice'>You finish digging.</span>")
 			deconstruct(TRUE)
 	else if(istype(W, /obj/item/weapon/lock/lock_assy))
-		src.door_create_lock(user)
-		qdel(W)
+		door_create_lock(user, W)
 	else if(istype(W, /obj/item/weapon/lock/key))
 		var/obj/item/weapon/lock/key/C = W
 		if(!C)
 			return
-		if(!src.locked_code) // There is no lock!
+		if(!locked_code) // There is no lock!
 			to_chat(user, "<span class='warning'>There is no keyhole in which to insert your key!</span>")
 			return
-		else if(C.keycode == src.locked_code) // Key is correct
-			src.Lock(user)
-		else if(C.keycode != src.locked_code) // Key is incorrect
-			to_chat(user, "<span class='warning>The key refuses to turn in the lock.<span>")
+		else if(C.keycode == locked_code) // Key is correct
+			Lock(user)
+		else if(C.keycode != locked_code) // Key is incorrect
+			to_chat(user, "<span class='warning'>The key refuses to turn in the lock.</span>")
 	else if(user.a_intent != INTENT_HARM)
 		attack_hand(user)
 	else

@@ -29,9 +29,9 @@
 	var/open_sound = 'sound/machines/click.ogg'
 	var/close_sound = 'sound/machines/click.ogg'
 	var/cutting_sound = 'sound/items/welder.ogg'
-	var/lockSound = 'sound/effects/lock.ogg'
-	var/unlockSound = 'sound/effects/unlock.ogg'
-	var/rattleSound = 'sound/effects/doorrattle.ogg'
+	var/lock_sound = 'sound/effects/lock.ogg'
+	var/unlock_sound = 'sound/effects/unlock.ogg'
+	var/rattle_sound = 'sound/effects/doorrattle.ogg'
 	var/material_drop = /obj/item/stack/sheet/metal
 	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
@@ -79,7 +79,7 @@
 		else
 			add_overlay("[icon_state]_open")
 
-/obj/structure/closet/proc/create_lock(mob/user)
+/obj/structure/closet/proc/create_lock(mob/user, obj/item/weapon/lock/lock_assy/L)
 	var/mob/living/carbon/human/H = user
 	if(!locked_code)
 		locked_code = rand(201, 400) // Generate a random code for the closet
@@ -90,11 +90,12 @@
 			K.name += " ([K.keycode])"
 			K.desc += " You notice the numbers [K.keycode] engraved along its stem."
 			H.put_in_hands(K) //Give the key to the person who made the lock
-			to_chat(H, "You succesfully integrate the lock assembly into [src] and remove the [K].")
+			to_chat(H, "You successfully integrate the lock assembly into [src] and remove the [K].")
+			qdel(L)
 	else if(locked_code)
-		to_chat(H, "<span class='warning'>You cannot apply a second lock to [src]!")
+		to_chat(H, "<span class='warning'>You are unable to apply a second lock to [src]!")
 	else
-		to_chat(H, "<span class='warning'>You cannot apply the lock to [src]!</span>")
+		to_chat(H, "<span class='warning'>You are unable apply the lock to [src]!</span>")
 
 /obj/structure/closet/proc/closet_lock()
 	islocked = TRUE
@@ -106,12 +107,12 @@
 	if(islocked)
 		closet_unlock()
 		to_chat(user, "You unlock [src].")
-		playsound(loc, unlockSound, 100, 1)
+		playsound(loc, unlock_sound, 100, 1)
 	else
 		if(!opened)
 			closet_lock()
 			to_chat(user, "You lock [src].")
-			playsound(loc, lockSound, 100, 1)
+			playsound(loc, lock_sound, 100, 1)
 		else
 			to_chat(user, "<span class='warning'>You cannot lock [src] while it's open!</span>")
 
@@ -130,7 +131,7 @@
 /obj/structure/closet/proc/can_open(mob/living/user)
 	if(islocked)
 		to_chat(user, "<span class='warning'>The [src] is locked!")
-		playsound(loc, rattleSound, 100, 1)
+		playsound(loc, rattle_sound, 100, 1)
 		return
 	if(welded || locked)
 		return 0
@@ -274,19 +275,18 @@
 			W.forceMove(loc)
 			return 1
 	else if(istype(W, /obj/item/weapon/lock/lock_assy))
-		src.create_lock(user)
-		qdel(W)
+		create_lock(user, W)
 	else if(istype(W, /obj/item/weapon/lock/key))
 		var/obj/item/weapon/lock/key/C = W
 		if(!C)
 			return
-		if(!src.locked_code) // There is no lock!
+		if(!locked_code) // There is no lock!
 			to_chat(user, "<span class='warning'>There is no keyhole in which to insert your key!</span>")
 			return
-		else if(C.keycode == src.locked_code) // Key is correct
-			src.Lock(user)
-		else if(C.keycode != src.locked_code)
-			to_chat(user, "<span class='warning>The key refuses to turn in the lock.<span>")
+		else if(C.keycode == locked_code) // Key is correct
+			Lock(user)
+		else if(C.keycode != locked_code)
+			to_chat(user, "<span class='warning'>The key refuses to turn in the lock.</span>")
 	else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(0, user))

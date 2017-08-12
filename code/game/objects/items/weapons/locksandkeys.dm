@@ -43,6 +43,6 @@ Items for locking doors and chests
     return
   if(ishuman(usr))
     var/k_name = stripped_input(usr, "What would you like to label the key?", "Key Label", null)
-    if((loc == usr && usr.stat ==0))
+    if((loc == usr && usr.stat == CONSCIOUS))
       name = "key ([k_name])"
       add_fingerprint(usr)
