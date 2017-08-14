@@ -92,10 +92,8 @@
 			H.put_in_hands(K) //Give the key to the person who made the lock
 			to_chat(H, "You successfully integrate the lock assembly into [src] and remove the [K].")
 			qdel(L)
-	else if(locked_code)
-		to_chat(H, "<span class='warning'>You are unable to apply a second lock to [src]!</span>")
 	else
-		to_chat(H, "<span class='warning'>You are unable apply the lock to [src]!</span>")
+		to_chat(H, "<span class='warning'>You are unable to apply a second lock to [src]!</span>")
 
 /obj/structure/closet/proc/closet_lock()
 	islocked = TRUE
@@ -285,7 +283,7 @@
 		else if(C.keycode == locked_code) // Key is correct
 			Lock(user)
 		else // key is incorrect
-			to_chat(user, "<span class='warning'>The key refuses to turn in the lock.</span>")
+			to_chat(user, "<span class='warning'>This key doesn't fit the lock!</span>")
 	else if(istype(W, /obj/item/weapon/weldingtool) && can_weld_shut)
 		var/obj/item/weapon/weldingtool/WT = W
 		if(!WT.remove_fuel(0, user))
