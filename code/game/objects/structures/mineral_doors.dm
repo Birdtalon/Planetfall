@@ -92,10 +92,8 @@
 			H.put_in_hands(K) //Give the key to the person who made the lock
 			qdel(L)
 			to_chat(H, "You successfully integrate the lock assembly into [src] and remove the [K].")
-	else if(locked_code)
-		to_chat(H, "<span class='warning'>You cannot apply a second lock to [src]!</span>")
 	else
-		to_chat(H, "<span class='warning'>You cannot apply the lock to [src]!</span>")
+		to_chat(H, "<span class='warning'>You cannot apply a second lock to [src]!</span>")
 
 //Lock the door
 
@@ -193,7 +191,7 @@
 		else if(C.keycode == locked_code) // Key is correct
 			Lock(user)
 		else // Key is incorrect
-			to_chat(user, "<span class='warning'>The key refuses to turn in the lock.</span>")
+			to_chat(user, "<span class='warning'>This key won't fit in the lock!</span>")
 	else if(user.a_intent != INTENT_HARM)
 		attack_hand(user)
 	else
