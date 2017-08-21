@@ -8,3 +8,7 @@
 /area/planet/village
   name = "Village"
   icon_state = "red"
+
+/area/planet/outdoors//anything not under a rooftop
+	name = "Planet Outdoors"
+	icon_state = "outdoors"

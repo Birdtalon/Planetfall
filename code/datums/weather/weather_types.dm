@@ -146,6 +146,8 @@
 
 	immunity_type = "rad"
 
+	probability = FALSE
+
 /datum/weather/rad_storm/telegraph()
 	..()
 	status_alarm("alert")
@@ -221,3 +223,65 @@
 	var/resist = L.getarmor(null, "acid")
 	if(prob(max(0,100-resist)))
 		L.acid_act(20,20)
+
+/datum/weather/regular_rain
+	name = "rain"
+	desc = "Some stay dry and others feel the pain"
+
+	telegraph_duration = 400
+	telegraph_message = "<span class='notice'>You see clouds occlude the sky...</span>"
+	telegraph_sound = 'sound/ambience/acidrain_start.ogg'
+
+	weather_message = "<span class='notice'>It starts pouring down!</span>"
+	weather_overlay = "rain"
+	weather_duration_lower = 1200//2 - 2.5 minutes
+	weather_duration_upper = 1500
+	weather_sound = 'sound/ambience/acidrain_mid.ogg'
+
+	end_duration = 100
+	end_message = "<span class='notice'>The rain starts to dissipate.</span>"
+	end_sound = 'sound/ambience/acidrain_end.ogg'
+
+	area_type = /area/planet/outdoors
+	target_z = ZLEVEL_STATION
+
+	probability = 90
+
+/datum/weather/regular_rain/impact(mob/living/L)
+	L.adjust_fire_stacks(-1)
+	if(prob(5))
+		to_chat(L, "<span class='danger'>The rain drenches you in water!</span>")
+
+/datum/weather/regular_rain/thunderstorm
+	name = "thunderstorm"
+	desc = "An electrifying experience."
+
+	telegraph_message = "<span class='notice'>You see a thunderstorm brewing in the distance...</span>"
+
+	telegraph_sound = 'sound/ambience/thunder_start.ogg'
+	weather_sound = 'sound/ambience/thunder_mid.ogg'
+
+	probability = 10
+
+/datum/weather/regular_rain/thunderstorm/impact(mob/living/L)
+	..()
+	if(!L.client)//this whole thing will only try to strike stuff around mobs, for the sake of not being boring
+		return
+	if(prob(1) && prob(1))//0.01% chance every tick
+		var/list/possible_targets = list()
+		for(var/atom/A in view(L, 6))
+			if(istype(get_area(A), /area/planet/outdoors))
+				possible_targets += A
+		var/atom/target = pick(possible_targets)
+		var/turf/T = get_step(get_step(target, NORTH), NORTH)
+		T.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)
+		playsound(T, 'sound/effects/thunder.ogg', 50, 1, -1)//sound effect by Mike Koenig. Thanks, Mike!
+		target.visible_message("<span class='danger'>[target] is hit by a lightning!</span>", "<span class='userdanger'>You're hit by a lightning!</span>")
+		if(isliving(target))
+			var/mob/living/M = target
+			M.adjustFireLoss(75)
+			M.flash_act(1, 1)
+			if(ishuman(M))
+				var/mob/living/carbon/human/H = M
+				H.electrocution_animation(40)
+

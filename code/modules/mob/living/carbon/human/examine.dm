@@ -214,12 +214,13 @@
 		else
 			msg += "<B>[t_He] [t_has] severe cellular damage.</B>\n"
 
-
-	if(fire_stacks > 0)
-		msg += "[t_He] [t_is] covered in something flammable.\n"
-	if(fire_stacks < 0)
-		msg += "[t_He] looks a little soaked.\n"
-
+	switch(fire_stacks)
+		if(-20 to -10)
+			msg += "[t_He] [t_is] completely drenched in water.\n"
+		if(-10 to 0)
+			msg += "[t_He] looks a little soaked.\n"
+		if(0 to 20)
+			msg += "[t_He] [t_is] covered in something flammable.\n"
 
 	if(pulledby && pulledby.grab_state)
 		msg += "[t_He] [t_is] restrained by [pulledby]'s grip.\n"
