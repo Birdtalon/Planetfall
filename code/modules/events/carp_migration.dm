@@ -4,7 +4,7 @@
 	weight = 15
 	min_players = 2
 	earliest_start = 6000
-	max_occurrences = 6
+	max_occurrences = 0
 
 /datum/round_event/carp_migration
 	announceWhen	= 3
@@ -24,5 +24,3 @@
 				new /mob/living/simple_animal/hostile/carp(C.loc)
 			else
 				new /mob/living/simple_animal/hostile/carp/megacarp(C.loc)
-
-

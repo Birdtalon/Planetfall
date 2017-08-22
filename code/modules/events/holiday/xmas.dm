@@ -2,7 +2,7 @@
 	name = "Treevenge (Christmas)"
 	holidayID = CHRISTMAS
 	typepath = /datum/round_event/treevenge
-	max_occurrences = 1
+	max_occurrences = 0
 	weight = 20
 
 /datum/round_event/treevenge/start()
@@ -20,7 +20,7 @@
 	holidayID = CHRISTMAS
 	typepath = /datum/round_event/presents
 	weight = -1							//forces it to be called, regardless of weight
-	max_occurrences = 1
+	max_occurrences = 0
 	earliest_start = 0
 
 /datum/round_event/presents/start()
@@ -99,7 +99,7 @@
 	holidayID = CHRISTMAS
 	typepath = /datum/round_event/santa
 	weight = 150
-	max_occurrences = 1
+	max_occurrences = 0
 	earliest_start = 20000
 
 /datum/round_event/santa

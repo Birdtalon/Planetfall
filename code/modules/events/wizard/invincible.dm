@@ -2,7 +2,7 @@
 	name = "Invincibility"
 	weight = 3
 	typepath = /datum/round_event/wizard/invincible
-	max_occurrences = 5
+	max_occurrences = 0
 	earliest_start = 0
 
 /datum/round_event/wizard/invincible/start()

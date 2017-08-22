@@ -3,7 +3,6 @@
 	typepath = /datum/round_event/ghost_role/sentience
 	weight = 10
 
-
 /datum/round_event/ghost_role/sentience
 	minimum_required = 1
 	role_name = "random animal"

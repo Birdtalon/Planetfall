@@ -2,9 +2,8 @@
 	name = "Alien Infestation"
 	typepath = /datum/round_event/ghost_role/alien_infestation
 	weight = 5
-
 	min_players = 10
-	max_occurrences = 1
+	max_occurrences = 0
 
 /datum/round_event/ghost_role/alien_infestation
 	announceWhen	= 400
