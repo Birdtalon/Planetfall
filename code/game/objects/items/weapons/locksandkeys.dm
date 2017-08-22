@@ -10,7 +10,7 @@ Items for locking doors and chests
   name = "lock assembly"
   desc = "This is a simple lock assembly for securing doors and chests."
   icon = 'icons/obj/items.dmi'
-  icon_state = "lock_assy" // PLACEHOLDER
+  icon_state = "lock_assy"
   w_class = WEIGHT_CLASS_NORMAL
 
 
@@ -18,7 +18,7 @@ Items for locking doors and chests
   name = "key"
   desc = "A small key used for opening things."
   icon = 'icons/obj/items.dmi'
-  icon_state = "key" // PLACEHOLDER
+  icon_state = "key"
   w_class = WEIGHT_CLASS_TINY
 
   var/keycode = 0
