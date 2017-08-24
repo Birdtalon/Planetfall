@@ -277,8 +277,7 @@
 		T.Beam(target, icon_state="lightning[rand(1,12)]", time = 5)
 		playsound(T, 'sound/effects/thunder.ogg', 50, 1, -1)//sound effect by Mike Koenig. Thanks, Mike!
 		target.visible_message("<span class='danger'>[target] is hit by lightning!</span>", "<span class='userdanger'>You're hit by a lightning!</span>")
-		if(isliving(target))
-			var/mob/living/M = target
+		for(var/mob/living/M in get_turf(target))
 			M.adjustFireLoss(75)
 			M.flash_act(1, 1)
 			if(ishuman(M))
